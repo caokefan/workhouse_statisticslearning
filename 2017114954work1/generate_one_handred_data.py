@@ -17,7 +17,8 @@ for i in s:
 
 blue=np.array(blue)
 orange=np.array(orange)
+plt.figure(1)
 plt.scatter(blue[:,0],blue[:,1])
 plt.scatter(orange[:,0],orange[:,1])
 plt.savefig('scatter_figure.png')
-#plt.show()
+plt.close(1)
