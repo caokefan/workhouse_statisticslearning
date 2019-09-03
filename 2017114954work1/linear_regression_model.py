@@ -13,7 +13,7 @@ if np.linalg.det(xyTxy)==0:
     print("this matrix is singular,cannot do inverse")
 else:
     w=xyTxy.I*(xyMat.T*zMat)
-    print(w)
+    np.savetxt("data.txt",w)
     false=0
     for i in range(200):
         if i<100:
@@ -21,4 +21,7 @@ else:
         else:
             if np.dot(np.mat(w).T,xy[i])<0.5: false=false+1
     falserate=false/200
-    print('误判率: {:.2%}'.format(falserate))
+    file = open('data.txt', 'a')
+    file.write('误判率: {:.2%}'.format(falserate))
+    file.close()
+    #print('误判率: {:.2%}'.format(falserate))
