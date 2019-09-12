@@ -25,11 +25,11 @@ def knn(inX,xy,z,k):
 falserate=[]
 for k in range(1,21):
     false = 0
-    for i in range(200):
+    for i, inx in enumerate(xy):
         if i < 100:
-            if knn(xy[i], xy, z, k) > 0.5: false = false + 1
+            if knn(inx, xy, z, k) > 0.5: false = false + 1
         else:
-            if knn(xy[i], xy, z, k) < 0.5: false = false + 1
+            if knn(inx, xy, z, k) < 0.5: false = false + 1
     falserate.append(false / 200)
 
 plt.plot(np.linspace(1,20,20),np.array(falserate))
