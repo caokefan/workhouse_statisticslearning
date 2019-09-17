@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 
 x = np.array([825, 215, 1070, 550, 480, 920, 1350, 325, 670, 1215])
 y = np.array([3.5, 1.0, 4.0, 2.0, 1.0, 3.0, 4.5, 1.5, 3.0, 5.0])
+
 # 1)
 plt.scatter(x,y)
 plt.savefig('scatter_figure.png')
@@ -21,6 +22,7 @@ def least_square(x,y):
 
 beta0, beta1 = least_square(x, y)
 
+# 2) 由图可以看出x与y大致呈线性关系
 X = np.arange(100, 1500, 100)
 Y = np.array([beta0 + beta1 * x for x in X])
 plt.plot(X,Y)
@@ -50,7 +52,6 @@ St = sum(SST(y))
 Sr = beta1 ** 2 * sum(SST(x))
 Se = St - Sr
 F_ratio = Sr / Se
-print(F_ratio)
 # F0.975(1,8) < F(1,8)=9.049481336581056 < F0.99(1,8)
 # 8)
 
@@ -64,6 +65,10 @@ plt.savefig('epsilon_figure.png')
 x0 = 1000
 predict_y = beta0 + beta1 * x0
 
-# 12)
-
-# 13)
+with open('result.txt','w') as f:
+    f.write("beta0 =%f,beta1 = %f\n" % (beta0,beta1))
+    f.write("回归标准误差：%f\n" % sumsigma2)
+    f.write("x与y的决定系数：%f\n" % r2)
+    f.write("F(1,8)= %f\n" % F_ratio)
+    f.write("需要的加班时间是：%f" % predict_y)
+    f.close()
