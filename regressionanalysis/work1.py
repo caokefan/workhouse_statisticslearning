@@ -33,7 +33,6 @@ sigma2 = []
 for valuey, valueY in zip(y,Y):
     sigma2.append((valueY - valuey) ** 2)
 sumsigma2 = sum(sigma2)
-# 5)
 
 # 6)
 def SSR(Y,y):
@@ -55,11 +54,6 @@ Se = St - Sr
 mSr = Sr / 1
 mSe = Se / 8
 F_ratio = mSr / mSe
-# F0.975(1,8) < F(1,8)=9.049481336581056 < F0.99(1,8)
-# 8)
-
-# 9)
-
 # 10)
 epsilon = np.array([yi - Yi for yi, Yi in zip(y,Y)])
 plt.scatter(y,epsilon)
