@@ -47,11 +47,14 @@ def SST(y):
         yield (i - meany) ** 2
 
 r2 = sum(SSR(Y,y)) / sum(SST(y))
+
 # 7)
 St = sum(SST(y))
 Sr = beta1 ** 2 * sum(SST(x))
 Se = St - Sr
-F_ratio = Sr / Se
+mSr = Sr / 1
+mSe = Se / 8
+F_ratio = mSr / mSe
 # F0.975(1,8) < F(1,8)=9.049481336581056 < F0.99(1,8)
 # 8)
 
@@ -66,9 +69,9 @@ x0 = 1000
 predict_y = beta0 + beta1 * x0
 
 with open('result.txt','w') as f:
-    f.write("beta0 =%f,beta1 = %f\n" % (beta0,beta1))
-    f.write("回归标准误差：%f\n" % sumsigma2)
-    f.write("x与y的决定系数：%f\n" % r2)
-    f.write("F(1,8)= %f\n" % F_ratio)
-    f.write("需要的加班时间是：%f" % predict_y)
+    f.write("3) beta0 =%f,beta1 = %f\n" % (beta0,beta1))
+    f.write("4) 回归标准误差：%f\n" % sumsigma2)
+    f.write("6) x与y的决定系数：%f\n" % r2)
+    f.write("7) F(1,8)= %f\n" % F_ratio)
+    f.write("11) 需要的加班时间是：%f" % predict_y)
     f.close()
