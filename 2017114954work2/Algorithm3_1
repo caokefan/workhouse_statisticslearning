@@ -1,0 +1,69 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+blue=[]
+orange=[]
+nblue=np.array([np.random.normal(1,1,10),np.random.normal(0,1,10)])
+norange=np.array([np.random.normal(0,1,10),np.random.normal(1,1,10)])
+s=np.random.uniform(0,1,100)
+for i in s:
+    index=int(10*i)-1
+    blue.append([np.random.normal(nblue[0][index],0.2),np.random.normal(nblue[1][index],0.2)])
+    orange.append([np.random.normal(norange[0][index],0.2),np.random.normal(norange[1][index],0.2)])
+
+blue=np.array(blue)
+orange=np.array(orange)
+
+x=np.concatenate((blue,orange),axis=0)
+x=np.hstack((np.ones([200,1]),x))
+y=np.append(np.zeros(100),np.ones(100))
+z=np.ones([200,3])
+
+#最小二乘
+xMat=np.mat(x)
+yMat=np.mat(y).T
+xTx=xMat.T*xMat
+if np.linalg.det(xTx)==0:
+    print("this matrix is singular,cannot do inverse")
+else:
+    w=xTx.I*(xMat.T*yMat)
+    w=w.T
+    with open('result.txt','w') as f:
+        f.write("Least Squares: ")
+        for i in range(w.shape[1]):
+            f.write(str(w[0,i]) + " ")
+        f.write("\n")
+y1hat = np.zeros(200)
+y1hat = w[0,0] * x[:,0] + w[0,1] * x[:,1] + w[0,2] * x[:,2]
+epsilon1 = np.array([yi - y1hati for yi, y1hati in zip(y,y1hat)])
+plt.scatter(y1hat,epsilon1)
+#Algorithm3.1 正交回归
+for j in range(1,3):
+    gamma = []
+    for l in range(0,j):
+        gamma.append(np.dot(z[:,l],x[:,j])/np.dot(z[:,l],z[:,l]))
+    sumz=np.zeros(200)
+    for k in range(0,j):
+        sumz += gamma[k] * z[:,k]
+    z[:,j] = x[:,j] - sumz
+
+beta=[]
+for i in range(3):
+    beta.append(np.dot(z[:,i],y)/np.dot(z[:,i],z[:,i]))
+with open("result.txt",'a') as f:
+    f.write("Regression by Successive Orthogonalization: ")
+    for i in beta:
+        f.write(str(i) + " ")
+    f.write("\n")
+y2hat = beta[0] * x[:,0] + beta[1] * x[:,1] + beta[2] * x[:,2]
+epsilon2 = np.array([yi - y2i for yi,y2i in zip(y,y2hat)])
+plt.scatter(y2hat,epsilon2)
+plt.savefig("residual_comparision_chart.png")
+
+#证明
+with open('result.txt','a') as f:
+    f.write("i!=j,<zi,zj>=\n")
+    for i in range(3):
+        for j in range(3):
+            if i != j:
+                f.write("%.4f " % np.dot(z[:, i], z[:, j]))
