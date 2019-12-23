@@ -68,4 +68,3 @@ with open('result.txt','w') as f:
     f.write("6) x与y的决定系数：%f\n" % r2)
     f.write("7) F(1,8)= %f\n" % F_ratio)
     f.write("11) 需要的加班时间是：%f" % predict_y)
-    f.close()
